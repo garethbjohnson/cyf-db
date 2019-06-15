@@ -17,19 +17,16 @@
 ## Lesson 2
 - Review
 - Signing up for MongoDB Atlas
-- Connecting to MongoDB Server with a local Express server
-- Creating databases in Atlas UI
-- Dropping databases in Atlas UI
-- Creating collections in Atlas UI
-- Dropping collections in Atlas UI
+- Making a local Express server
+- Connecting to a MongoDB server from a local Node server
+- Creating and dropping databases and collections in Atlas
 - Reading documentation
-- Data types
+- BSON types
 - Creating documents
-- Updating documents
-- Deleting documents
-- Model validation?
-- Making an end-to-end example
-- Optional: document relationships
+  - Creating a document in Atlas
+  - Creating a document with the MongoDB Node Driver
+- Updating a document
+- Deleting a document
 
 ## Lesson 3
 - ???
