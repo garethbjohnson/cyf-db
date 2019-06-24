@@ -1,0 +1,121 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Readwell</title>
+    <style>
+      body {
+        font-family: Georgia, serif;
+        margin: auto;
+        max-width: 400px;
+        text-align: center;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      p {
+        text-align: left;
+      }
+      
+      .result {
+        align-items: center;
+        border: 2px solid grey;
+        display: flex;
+        height: 50px;
+        justify-content: space-between;
+        margin: 20px auto;
+        overflow: hidden;
+        padding: 10px;
+        width: 300px;
+      }
+
+      .no-results {
+        text-align: center;
+      }
+      
+      .title {
+        text-align: left;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <h1>BednMongo</h1>
+    
+    <p>
+      Search for the best rooms and apartments, all powered by mongodb
+    </p>
+
+    <div>
+      <input id="title" placeholder="Search">
+      <br>
+      <input id="price_from" placeholder="Price from">
+      <input id="price_to" placeholder="Price to">
+    </div>
+
+    <button onclick="search()">Search</button>
+    
+    <div id="results">
+      <!-- The results go here. -->
+    </div>
+    
+    <script>
+      function showResults(results) {
+        const resultsNode = document.getElementById('results')
+        resultsNode.innerHTML = 'result'
+
+        if (!results.length) {
+          resultsNode.innerHTML = `<p class="no-results">No results</p>`
+        }
+        
+        for (const result of results) {
+          const resultNode = document.createElement('div')
+          resultNode.className = 'result'
+          
+          resultNode.innerHTML = `
+            <span class="title">
+              <a href="/api/results/${result._id}">${result.name}</a>
+            </span>
+            <span class="author">${result.summary}</span>
+          `
+          
+          resultsNode.appendChild(resultNode)
+        }
+      }
+
+      function search() {
+        const search_input = document.getElementById('title')
+        const search_value = search_input.value
+
+        const pricefrom_input = document.getElementById('price_from')
+        const pricefrom_value = pricefrom_input.value
+
+        const priceto_input = document.getElementById('price_to')
+        const priceto_value = priceto_input.value
+
+        let queryString = ''
+        
+        if (search_value) {
+          queryString = queryString + 'title=' + search_value + '&'
+        }
+        
+        if (pricefrom_value) {
+          queryString = queryString + 'from=' + pricefrom_value + '&'
+        }
+
+        if (priceto_value) {
+            queryString = queryString + 'to=' + priceto_value
+        }
+
+          fetch('/api/search?' + queryString)
+          .then(response => response.json())
+          .then(json => showResults(json))
+      }
+      
+      search()
+    </script>
+  </body>
+</html>
